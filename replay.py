@@ -16,23 +16,15 @@ class LoRaRcvCont(LoRa):
         super(LoRaRcvCont, self).__init__(verbose)
         self.set_mode(MODE.SLEEP)
         self.set_dio_mapping([0] * 6)
-        #self.key = "ExampleAESKeyTst"
 
     def start(self):
         self.reset_ptr_rx()
-        # ~ self.set_mode(MODE.RXCONT)
-        # ~ while True:
-            # ~ sleep(.5)
-            # ~ rssi_value = self.get_rssi_value()
-            # ~ status = self.get_modem_status()
-            # ~ sys.stdout.flush()
 
     def on_rx_done(self):
         self.clear_irq_flags(RxDone=1)
         encrypted_payloads.append(self.read_payload(nocheck=True))
         utf_str = bytes(encrypted_payloads[-1]).decode("utf-8",'ignore')
         print(f"Received: {utf_str}")
-        #sleep(8)
         self.set_mode(MODE.SLEEP)
         self.reset_ptr_rx()
         self.set_mode(MODE.RXCONT) 
@@ -55,7 +47,6 @@ def main():
     lora.set_mode(MODE.SLEEP)
     print(f"{max_frames} frames received\nStarting transmission in 15 seconds...")
     sleep(15)
-    #lora.set_mode(MODE.TX)
     for i in range(len(encrypted_payloads)):
         utf_str = bytes(encrypted_payloads[i]).decode("utf-8",'ignore')
         print(f"Sending: {utf_str}")
