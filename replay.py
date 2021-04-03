@@ -1,14 +1,9 @@
 from time import sleep
 from SX127x.LoRa import *
 from SX127x.board_config import BOARD
-#import logging
-#import parse
-#import simplekml
-#import requests
 
 BOARD.setup()
 encrypted_payloads = []
-frames_received = 0
 max_frames = 5
 
 class LoRaRcvCont(LoRa):
